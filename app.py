@@ -1,3 +1,8 @@
+from dotenv import load_dotenv
+
+load_dotenv()
+
+import os
 import io
 import json
 import shutil
@@ -30,7 +35,7 @@ MAX_FILES = 100
 EXPIRE_SECONDS = 3600
 TURNSTILE_VERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify"
 TURNSTILE_SITE_KEY = "0x4AAAAAADPkVbDAr7A4tiI7"
-TURNSTILE_SECRET_KEY = ""
+TURNSTILE_SECRET_KEY = os.getenv("TURNSTILE_SECRET_KEY")
 
 for _dir in (UPLOAD_DIR, OUTPUT_DIR, ZIP_DIR):
     _dir.mkdir(parents=True, exist_ok=True)
@@ -166,8 +171,8 @@ async def convert_images(
 
             save_kwargs = {"quality": max(1, min(100, int(quality)))}
             if remove_all or remove_metadata_item:
-                save_kwargs["exif"] = b""
-                save_kwargs["icc_profile"] = None
+                save_kwargs["exif"] = b"" # type: ignore
+                save_kwargs["icc_profile"] = None # type: ignore
 
             img.save(output_path, format="AVIF", **save_kwargs)
 
