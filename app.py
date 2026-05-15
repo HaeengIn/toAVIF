@@ -7,7 +7,7 @@ import uuid
 import zipfile
 from pathlib import Path
 
-import pillow_avif  # noqa: F401
+import pillow_avif
 import requests
 from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.responses import FileResponse, JSONResponse
@@ -30,7 +30,6 @@ MAX_FILES = 100
 EXPIRE_SECONDS = 3600
 TURNSTILE_VERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify"
 TURNSTILE_SITE_KEY = "0x4AAAAAADPkVbDAr7A4tiI7"
-# TODO: 실제 배포 전 비밀 키를 환경 변수로 주입하세요.
 TURNSTILE_SECRET_KEY = ""
 
 for _dir in (UPLOAD_DIR, OUTPUT_DIR, ZIP_DIR):
