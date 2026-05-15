@@ -3,12 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Link CSS file -->
     <link rel="stylesheet" href="/static/css/style.css?v={{ static_version('static/css/style.css') }}">
-    <!-- Title of page -->
+    <link rel="stylesheet" href="/static/css/templates/index.css?v={{ static_version('static/css/templates/index.css') }}">
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <title>toAVIF</title>
 </head>
 <body>
-    
+<div id="cursor-glow"></div>
+<main class="container">
+    <h1>toAVIF</h1>
+    <p class="description">JPG/PNG/WEBP/GIF를 최대 100개까지 AVIF로 변환합니다.</p>
+
+    <div class="captcha-wrap">
+        <div class="cf-turnstile" data-sitekey="{{ turnstile_site_key }}"></div>
+    </div>
+
+    <div id="drop-zone" class="drop-zone">여기에 파일을 드래그&드롭하거나 클릭해서 선택</div>
+    <input id="file-input" type="file" multiple accept=".jpg,.jpeg,.png,.webp,.gif" hidden>
+
+    <div class="settings">
+        <h2>전체 설정</h2>
+        <label>너비 <input id="default-width" type="number" min="1" placeholder="원본 유지"></label>
+        <label>높이 <input id="default-height" type="number" min="1" placeholder="원본 유지"></label>
+        <label>품질 <input id="default-quality" type="number" min="1" max="100" value="80"></label>
+        <label><input id="default-strip" type="checkbox" checked> 메타데이터 삭제</label>
+    </div>
+
+    <div id="file-list" class="file-list"></div>
+    <button id="convert-btn" class="btn">변환 시작</button>
+
+    <div class="progress-wrap">
+        <label>업로드/변환 진행률</label>
+        <progress id="main-progress" max="100" value="0"></progress>
+    </div>
+
+    <section id="result" class="result"></section>
+    <button id="reset-btn" class="btn ghost" hidden>처음으로 돌아가기</button>
+</main>
+<script src="/static/js/script.js?v={{ static_version('static/js/script.js') }}"></script>
+<script src="/static/js/templates/index.js?v={{ static_version('static/js/templates/index.js') }}"></script>
 </body>
 </html>
