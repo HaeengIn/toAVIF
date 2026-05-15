@@ -37,9 +37,9 @@
 /* Variable Settings */
 
 :root {
-  --ibmplexsans-Bold: "IBMPlexSansKR-Bold";
-  --ibmplexsans-Medium: "IBMPlexSansKR-Medium";
-  --ibmplexsans-Regular: "IBMPlexSansKR-Regular";
-  --ibmplexsans-Light: "IBMPlexSansKR-Light";
-  --ibmplexsans-Extralight: "IBMPlexSansKR-Extralight";
+  --ibmplexsanskr-Bold: "IBMPlexSansKR-Bold";
+  --ibmplexsanskr-Medium: "IBMPlexSansKR-Medium";
+  --ibmplexsanskr-Regular: "IBMPlexSansKR-Regular";
+  --ibmplexsanskr-Light: "IBMPlexSansKR-Light";
+  --ibmplexsanskr-Extralight: "IBMPlexSansKR-Extralight";
 }
