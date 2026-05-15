@@ -1,4 +1,4 @@
-@import url(./fonts.css=?v20260515);
+@import url(./fonts.css?v=20250515);
 
 :root {
   --bg: #0f0f0f;
@@ -37,4 +37,24 @@ progress {
 
 .hidden {
   display: none !important;
+}
+
+/* Font Settings */
+
+body {
+  font-family: var(--ibmplexsanskr-Regular);
+}
+
+h1 {
+  font-family: var(--ibmplexsanskr-Bold);
+}
+
+p,
+label {
+  font-family: var(--ibmplexsanskr-Light);
+}
+
+h2,
+h3 {
+  font-family: var(--ibmplexsanskr-Medium);
 }
