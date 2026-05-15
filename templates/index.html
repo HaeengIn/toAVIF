@@ -3,12 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Link CSS file -->
     <link rel="stylesheet" href="/static/css/style.css?v={{ static_version('static/css/style.css') }}">
-    <!-- Title of page -->
+    <link rel="stylesheet" href="/static/css/templates/index.css?v={{ static_version('static/css/templates/index.css') }}">
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <title>toAVIF</title>
 </head>
 <body>
-    
+<div class="mouse-glow" id="mouseGlow"></div>
+<main class="page">
+    <h1 class="title">toAVIF</h1>
+    <p class="subtitle">최대 100개의 이미지를 AVIF로 변환</p>
+
+    <section class="turnstile-section">
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAADPkVbDAr7A4tiI7" data-callback="onTurnstileSuccess"></div>
+    </section>
+
+    <section class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" class="file-input" multiple accept=".jpg,.jpeg,.png,.webp,.gif">
+        <p>드래그 & 드롭 또는 클릭해서 업로드</p>
+    </section>
+
+    <div class="settings" id="settings"></div>
+    <button class="convert-button" id="convertButton">변환하기</button>
+    <button class="reset-button hidden" id="resetButton">처음으로 돌아가기</button>
+
+    <div class="progress-wrap" id="progressWrap"><div class="progress-bar" id="progressBar"></div></div>
+
+    <section class="result" id="result"></section>
+</main>
+<script src="/static/js/script.js?v={{ static_version('static/js/script.js') }}"></script>
+<script src="/static/js/templates/index.js?v={{ static_version('static/js/templates/index.js') }}"></script>
 </body>
 </html>

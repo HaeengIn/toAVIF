@@ -1,1 +1,18 @@
 @import url(./fonts.css=?v20260515);
+
+:root {
+  --bg: #111;
+  --panel: #1a1a1a;
+  --line: #3a3a3a;
+  --text: #f3f3f3;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: 'IBM Plex Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+.hidden { display:none; }
