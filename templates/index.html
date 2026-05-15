@@ -3,9 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Link CSS files -->
     <link rel="stylesheet" href="/static/css/style.css?v={{ static_version('static/css/style.css') }}">
-    <link rel="stylesheet" href="/static/css/templates/index.css?v={{ static_version('static/css/templates/index.css') }}">
+    <link rel="stylesheet" href="/static/css/templates/index.css?v={{ static_version('static/css/index.css') }}">
+    <!-- Import Cloudflare Turnstile -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <!-- Favicon Setting -->
+    <link rel="icon" type="image/png" href="/static/favicon/favicon-96x96.png?v=20260515" sizes="96x96">
+    <link rel="icon" type="image/svg+xml" href="/static/favicon/favicon.svg?v=20260515">
+    <link rel="shortcut icon" href="/static/favicon/favicon.ico?v=20260515">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/favicon/apple-touch-icon.png?v=20260515">
+    <meta name="apple-mobile-web-app-title" content="toAVIF">
+    <link rel="manifest" href="/static/favicon/site.webmanifest?v=20260515">
+    <!-- Title of page -->
     <title>toAVIF</title>
 </head>
 <body>
@@ -53,6 +63,6 @@
     </section>
 </main>
 <script async defer src="/static/js/script.js?v={{ static_version('static/js/script.js') }}"></script>
-<script async defer src="/static/js/templates/index.js?v={{ static_version('static/js/templates/index.js') }}"></script>
+<script async defer src="/static/js/templates/index.js?v={{ static_version('static/js/index.js') }}"></script>
 </body>
 </html>
