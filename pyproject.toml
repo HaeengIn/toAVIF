@@ -9,6 +9,7 @@ dependencies = [
     "jinja2>=3.1.6",
     "pillow>=12.2.0",
     "pillow-avif-plugin>=1.5.5",
+    "python-multipart>=0.0.28",
     "requests>=2.34.2",
     "uvicorn>=0.47.0",
 ]
