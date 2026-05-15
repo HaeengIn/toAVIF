@@ -1,0 +1,39 @@
+/* Import IBM Plex Sans KR */
+
+@font-face {
+    font-family: 'IBMPlexSansKR-Bold';
+    font-weight: 600;
+    src: url(/static/fonts/IBMPlexSansKR/IBMPlexSansKR-Bold.woff2) format("woff2");
+}
+
+@font-face {
+    font-family: 'IBMPlexSansKR-Medium';
+    font-weight: 500;
+    src: url(/static/fonts/IBMPlexSansKR/IBMPlexSansKR-Medium.woff2) format("woff2");
+}
+
+@font-face {
+    font-family: 'IBMPlexSansKR-Regular';
+    font-weight: 400;
+    src: url(/static/fonts/IBMPlexSansKR/IBMPlexSansKR-Regular.woff2) format("woff2");
+}
+
+@font-face {
+    font-family: 'IBMPlexSansKR-Light';
+    font-weight: 300;
+    src: url(/static/fonts/IBMPlexSansKR/IBMPlexSansKR-Light.woff2) format("woff2");
+}
+
+@font-face {
+    font-family: 'IBMPlexSansKR-ExtraLight';
+    font-weight: 200;
+    src: url(/static/fonts/IBMPlexSansKR/IBMPlexSansKR-ExtraLight.woff2) format("woff2");
+}
+
+:root {
+    --ibmplexsans-Bold: 'IBMPlexSansKR-Bold';
+    --ibmplexsans-Medium: 'IBMPlexSansKR-Medium';
+    --ibmplexsans-Regular: 'IBMPlexSansKR-Regular';
+    --ibmplexsans-Light: 'IBMPlexSansKR-Light';
+    --ibmplexsans-Extralight: 'IBMPlexSansKR-Extralight';
+}
