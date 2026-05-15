@@ -1,30 +1,40 @@
 @import url(./fonts.css=?v20260515);
 
 :root {
-    --bg: #0f0f0f;
-    --panel: #1a1a1a;
-    --text: #f1f1f1;
-    --muted: #b4b4b4;
-    --line: #2a2a2a;
+  --bg: #0f0f0f;
+  --panel: #1a1a1a;
+  --text: #f1f1f1;
+  --muted: #b4b4b4;
+  --line: #2a2a2a;
 }
-* { box-sizing: border-box; }
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-    margin: 0;
-    font-family: 'IBM Plex Sans KR', sans-serif;
-    color: var(--text);
-    background: radial-gradient(circle at top, #1b1b1b, var(--bg));
-    min-height: 100vh;
+  margin: 0;
+  color: var(--text);
+  background: radial-gradient(circle at top, #1b1b1b, var(--bg));
+  min-height: 100vh;
 }
-button, .btn {
-    background: #f4f4f4;
-    color: #111;
-    border: none;
-    padding: 10px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    text-decoration: none;
+
+button,
+.btn {
+  background: #f4f4f4;
+  color: #111;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
 }
-input, progress {
-    accent-color: #ddd;
+
+input,
+progress {
+  accent-color: #ddd;
 }
-.hidden { display: none !important; }
+
+.hidden {
+  display: none !important;
+}
