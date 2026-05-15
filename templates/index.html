@@ -3,12 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Link CSS file -->
     <link rel="stylesheet" href="/static/css/style.css?v={{ static_version('static/css/style.css') }}">
-    <!-- Title of page -->
     <title>toAVIF</title>
 </head>
 <body>
-    
+    <main class="container">
+        <header class="header">
+            <h1>toAVIF</h1>
+            <p>JPG, JPEG, PNG, WEBP, GIF를 AVIF 이미지 또는 움직이는 AVIF로 변환해 보세요.</p>
+        </header>
+
+        <section class="card">
+            <form id="upload-form" class="upload-form">
+                <input id="file-input" type="file" name="files" accept=".jpg,.jpeg,.png,.webp,.gif" multiple hidden>
+
+                <div id="drop-zone" class="drop-zone" role="button" tabindex="0" aria-label="이미지 파일 업로드">
+                    <p><strong>이미지를 드래그&드롭</strong> 하거나 클릭해서 업로드</p>
+                    <span>최대 100개 · JPG/JPEG/PNG/WEBP/GIF</span>
+                </div>
+
+                <div class="actions">
+                    <button id="convert-button" type="submit">AVIF로 변환하기</button>
+                    <button id="reset-button" type="button" class="secondary">선택 초기화</button>
+                </div>
+            </form>
+
+            <div id="status" class="status" aria-live="polite"></div>
+            <ul id="file-list" class="file-list"></ul>
+        </section>
+    </main>
+
+    <script src="/static/js/script.js?v={{ static_version('static/js/script.js') }}"></script>
 </body>
 </html>
