@@ -7,7 +7,6 @@ const state = {
 
 window.onTurnstileSuccess = (token) => {
   state.turnstileToken = token;
-  document.getElementById('dropZone').classList.remove('disabled');
 };
 
 const allowedExt = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
@@ -30,10 +29,6 @@ dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover
 dropZone.addEventListener('drop', (e) => {
   e.preventDefault();
   dropZone.classList.remove('dragover');
-  if (!state.turnstileToken) {
-    alert('캡챠 인증 후 업로드 해주세요.');
-    return;
-  }
   handleFiles([...e.dataTransfer.files]);
 });
 fileInput.addEventListener('change', (e) => handleFiles([...e.target.files]));
@@ -91,7 +86,7 @@ document.getElementById('applyGlobalBtn').addEventListener('click', () => {
 });
 
 convertBtn.addEventListener('click', async () => {
-  if (!state.turnstileToken) return alert('캡챠 인증 후 업로드 해주세요.');
+  if (!state.turnstileToken) return alert('캡챠 인증 후 변환을 시작해주세요.');
   if (state.files.length === 0) return alert('업로드된 파일이 없습니다.');
 
   uploadProgress.value = 25;
