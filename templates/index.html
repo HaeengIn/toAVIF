@@ -1,14 +1,128 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Link CSS file -->
-    <link rel="stylesheet" href="/static/css/style.css?v={{ static_version('static/css/style.css') }}">
-    <!-- Title of page -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>toAVIF</title>
-</head>
-<body>
-    
-</body>
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}" />
+  </head>
+  <body>
+    <main class="container">
+      <section class="card">
+        <h1>toAVIF</h1>
+        <p class="subtitle">
+          JPG, JPEG, PNG, WEBP, GIF를 AVIF(애니메이션 포함)로 변환합니다.
+        </p>
+
+        <form id="upload-form" action="/convert" method="post" enctype="multipart/form-data">
+          <label for="file-input" class="dropzone" id="dropzone">
+            <input
+              id="file-input"
+              type="file"
+              name="files"
+              multiple
+              accept=".jpg,.jpeg,.png,.webp,.gif,image/jpeg,image/png,image/webp,image/gif"
+            />
+            <span class="drop-title">파일을 드래그&드롭하거나 클릭해서 선택하세요</span>
+            <span class="drop-desc">최대 {{ max_files }}개 / 지원 형식: {{ supported_formats }}</span>
+          </label>
+
+          <ul id="file-list" class="file-list"></ul>
+
+          <button type="submit" id="submit-btn">AVIF로 변환 후 ZIP 다운로드</button>
+        </form>
+
+        <p id="status" class="status" aria-live="polite"></p>
+      </section>
+    </main>
+
+    <script>
+      const MAX_FILES = {{ max_files }};
+      const form = document.getElementById("upload-form");
+      const input = document.getElementById("file-input");
+      const dropzone = document.getElementById("dropzone");
+      const fileList = document.getElementById("file-list");
+      const status = document.getElementById("status");
+      const submitBtn = document.getElementById("submit-btn");
+
+      const dt = new DataTransfer();
+
+      function syncInputFiles() {
+        input.files = dt.files;
+      }
+
+      function renderFiles() {
+        fileList.innerHTML = "";
+        Array.from(dt.files).forEach((file, index) => {
+          const li = document.createElement("li");
+          li.className = "file-item";
+          li.innerHTML = `<span>${file.name}</span><button type="button" data-index="${index}">제거</button>`;
+          fileList.appendChild(li);
+        });
+      }
+
+      function addFiles(files) {
+        const currentCount = dt.files.length;
+        const incoming = Array.from(files);
+
+        if (currentCount + incoming.length > MAX_FILES) {
+          status.textContent = `한 번에 최대 ${MAX_FILES}개까지 업로드할 수 있습니다.`;
+          return;
+        }
+
+        incoming.forEach((file) => dt.items.add(file));
+        syncInputFiles();
+        renderFiles();
+        status.textContent = `${dt.files.length}개 파일이 선택되었습니다.`;
+      }
+
+      input.addEventListener("change", (event) => {
+        addFiles(event.target.files);
+        input.value = "";
+      });
+
+      ["dragenter", "dragover"].forEach((type) => {
+        dropzone.addEventListener(type, (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          dropzone.classList.add("dragover");
+        });
+      });
+
+      ["dragleave", "drop"].forEach((type) => {
+        dropzone.addEventListener(type, (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          dropzone.classList.remove("dragover");
+        });
+      });
+
+      dropzone.addEventListener("drop", (event) => {
+        addFiles(event.dataTransfer.files);
+      });
+
+      fileList.addEventListener("click", (event) => {
+        if (!(event.target instanceof HTMLButtonElement)) return;
+        const index = Number(event.target.dataset.index);
+        if (Number.isNaN(index)) return;
+
+        const keptFiles = Array.from(dt.files).filter((_, i) => i !== index);
+        dt.items.clear();
+        keptFiles.forEach((file) => dt.items.add(file));
+        syncInputFiles();
+        renderFiles();
+        status.textContent = `${dt.files.length}개 파일이 선택되었습니다.`;
+      });
+
+      form.addEventListener("submit", () => {
+        if (!dt.files.length) {
+          status.textContent = "파일을 먼저 선택해주세요.";
+          return;
+        }
+        submitBtn.disabled = true;
+        submitBtn.textContent = "변환 중...";
+        status.textContent = "변환 후 ZIP 파일을 준비하고 있습니다...";
+      });
+    </script>
+  </body>
 </html>
