@@ -3,12 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Link CSS file -->
     <link rel="stylesheet" href="/static/css/style.css?v={{ static_version('static/css/style.css') }}">
-    <!-- Title of page -->
+    <link rel="stylesheet" href="/static/css/templates/index.css?v={{ static_version('static/css/templates/index.css') }}">
     <title>toAVIF</title>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
-<body>
-    
+<body class="page-body">
+    <div class="cursor-glow" id="cursorGlow"></div>
+    <main class="container">
+        <h1 class="title">toAVIF 변환기</h1>
+
+        <section class="panel" id="captchaPanel">
+            <h2>1. 캡챠 인증</h2>
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAADPkVbDAr7A4tiI7" data-callback="onTurnstileSuccess"></div>
+        </section>
+
+        <section class="panel hidden" id="uploadPanel">
+            <h2>2. 이미지 업로드 (최대 100장)</h2>
+            <div class="dropzone" id="dropzone">여기에 이미지를 드래그 &amp; 드롭하거나 클릭해서 선택</div>
+            <input class="hidden" id="fileInput" type="file" multiple accept=".jpg,.jpeg,.png,.webp,.gif">
+            <div class="progress-wrap"><div class="progress" id="uploadProgress"></div></div>
+            <ul id="fileList" class="file-list"></ul>
+            <div class="settings-row">
+                <input id="globalWidth" class="input" type="number" min="1" placeholder="전체 너비(px)">
+                <input id="globalHeight" class="input" type="number" min="1" placeholder="전체 높이(px)">
+                <input id="globalQuality" class="input" type="number" min="1" max="100" value="60" placeholder="전체 퀄리티">
+                <label><input id="globalStrip" type="checkbox"> 전체 메타데이터 삭제</label>
+                <button id="applyGlobal" class="btn">전체 설정 적용</button>
+            </div>
+            <button id="convertBtn" class="btn primary">AVIF 변환하기</button>
+        </section>
+
+        <section class="panel hidden" id="resultPanel">
+            <h2>3. 변환 결과</h2>
+            <div class="progress-wrap"><div class="progress" id="convertProgress"></div></div>
+            <div class="progress-wrap"><div class="progress" id="downloadProgress"></div></div>
+            <a id="downloadZip" class="btn hidden" href="#">ZIP 다운로드</a>
+            <ul id="resultList" class="file-list"></ul>
+            <button id="resetBtn" class="btn">추가 변환하기</button>
+        </section>
+    </main>
+
+    <script src="/static/js/script.js?v={{ static_version('static/js/script.js') }}"></script>
+    <script src="/static/js/templates/index.js?v={{ static_version('static/js/templates/index.js') }}"></script>
 </body>
 </html>
