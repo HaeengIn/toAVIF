@@ -3,12 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Link CSS file -->
     <link rel="stylesheet" href="/static/css/style.css?v={{ static_version('static/css/style.css') }}">
-    <!-- Title of page -->
+    <link rel="stylesheet" href="/static/css/templates/index.css?v={{ static_version('static/css/templates/index.css') }}">
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
     <title>toAVIF</title>
 </head>
 <body>
-    
+<div class="mouse-glow" id="mouseGlow"></div>
+<main class="container">
+    <h1>toAVIF</h1>
+    <p class="desc">JPG, PNG, WEBP, GIF 최대 {{ max_files }}장을 AVIF로 변환합니다.</p>
+
+    <section id="uploadSection" class="card">
+        <div id="turnstileWrapper" class="turnstile-wrapper">
+            <div class="cf-turnstile" data-sitekey="{{ turnstile_site_key }}" data-callback="onTurnstileSuccess"></div>
+        </div>
+        <div id="dropZone" class="drop-zone disabled">
+            <input id="fileInput" type="file" accept=".jpg,.jpeg,.png,.webp,.gif" multiple>
+            <p>드래그 & 드롭 또는 클릭해서 이미지 업로드</p>
+        </div>
+        <div class="global-settings">
+            <h3>전체 설정</h3>
+            <label>너비 <input type="number" id="globalWidth" min="1"></label>
+            <label>높이 <input type="number" id="globalHeight" min="1"></label>
+            <label>퀄리티 <input type="number" id="globalQuality" value="70" min="1" max="100"></label>
+            <label><input type="checkbox" id="globalRemoveMetadata"> 메타데이터 삭제</label>
+            <button id="applyGlobalBtn" type="button">전체 적용</button>
+        </div>
+        <div id="previewList" class="preview-list"></div>
+        <div class="action-row">
+            <button id="convertBtn" type="button">변환 시작</button>
+        </div>
+    </section>
+
+    <section id="resultSection" class="card hidden">
+        <h2>변환 완료</h2>
+        <div id="resultList" class="result-list"></div>
+        <div class="action-row">
+            <a id="zipDownloadBtn" class="btn hidden" href="#">ZIP 다운로드</a>
+            <button id="resetBtn" type="button">추가 변환하기</button>
+        </div>
+    </section>
+
+    <section class="card">
+        <h3>진행 상황</h3>
+        <div class="progress-wrap"><span>업로드</span><progress id="uploadProgress" value="0" max="100"></progress></div>
+        <div class="progress-wrap"><span>변환</span><progress id="convertProgress" value="0" max="100"></progress></div>
+        <div class="progress-wrap"><span>다운로드 준비</span><progress id="downloadProgress" value="0" max="100"></progress></div>
+    </section>
+</main>
+<script src="/static/js/script.js?v={{ static_version('static/js/script.js') }}"></script>
+<script src="/static/js/templates/index.js?v={{ static_version('static/js/templates/index.js') }}"></script>
 </body>
 </html>
