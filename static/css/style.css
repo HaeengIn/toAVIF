@@ -1,1 +1,65 @@
-@import url(./fonts.css=?v20260515);
+@import url(./fonts.css?v=20260515);
+
+:root {
+  color-scheme: light;
+  --bg: #f6f8fb;
+  --card: #ffffff;
+  --text: #111827;
+  --subtle: #6b7280;
+  --line: #e5e7eb;
+  --accent: #2563eb;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "IBM Plex Sans KR", sans-serif;
+  background: radial-gradient(circle at 20% 0%, #eef3ff 0, var(--bg) 45%);
+  color: var(--text);
+}
+.page { min-height: 100vh; display: grid; place-items: center; padding: 32px 16px; }
+.card {
+  width: min(720px, 100%);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+}
+h1 { margin: 0; font-size: 32px; }
+.subtitle { color: var(--subtle); margin-top: 8px; }
+.drop-zone {
+  margin-top: 24px;
+  border: 2px dashed #bfdbfe;
+  border-radius: 16px;
+  padding: 32px 20px;
+  display: block;
+  cursor: pointer;
+  transition: 0.2s ease;
+  background: #f8fbff;
+}
+.drop-zone.dragover { border-color: var(--accent); background: #eef4ff; transform: translateY(-1px); }
+.drop-title { margin: 0; font-weight: 600; }
+.drop-desc { margin: 6px 0 0; color: var(--subtle); }
+.file-list {
+  margin: 16px 0;
+  max-height: 220px;
+  overflow: auto;
+  padding-left: 20px;
+  color: #374151;
+}
+.status { min-height: 24px; margin: 0 0 12px; font-size: 14px; }
+.status.ok { color: #065f46; }
+.status.error { color: #b91c1c; }
+.status.loading { color: #1d4ed8; }
+.convert-button {
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+  background: var(--accent);
+  color: white;
+  font-weight: 700;
+  padding: 14px;
+  cursor: pointer;
+}
+.convert-button:disabled { opacity: 0.6; cursor: wait; }
