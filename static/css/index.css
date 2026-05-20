@@ -62,6 +62,12 @@ h1 {
   color: var(--muted);
 }
 
+.global-settings label:has(input[type="checkbox"]) {
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+
 .global-settings input {
   background: #111;
   border: 1px solid #333;
