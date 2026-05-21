@@ -102,7 +102,10 @@ h1 {
 .action-row {
   margin-top: 14px;
   display: flex;
-  gap: 8px;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .progress-wrap {
@@ -119,7 +122,10 @@ progress {
 }
 
 .turnstile-wrapper {
-  margin-bottom: 12px;
+  margin-left: auto;
+  min-height: 65px;
+  display: flex;
+  align-items: center;
 }
 
 .mouse-glow {
@@ -137,4 +143,27 @@ progress {
   opacity: 0;
   transition: opacity 1s ease;
   z-index: 1000;
+}
+
+
+.setting-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background: #141414;
+  color: #d5d5d5;
+  font-size: 14px;
+}
+
+.setting-check input[type="checkbox"] {
+  accent-color: #7ea3ff;
+  width: 16px;
+  height: 16px;
+}
+
+.global-settings label:has(input[type="checkbox"]) {
+  flex-direction: row;
 }
