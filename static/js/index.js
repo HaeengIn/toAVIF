@@ -44,7 +44,7 @@ function handleFiles(files) {
       continue;
     }
     state.files.push(file);
-    state.settings[String(state.files.length - 1)] = { width: '', height: '', quality: 70, remove_metadata: false };
+    state.settings[String(state.files.length - 1)] = { width: '', height: '', quality: 80, remove_metadata: false };
   }
   renderPreview();
 }
@@ -60,7 +60,7 @@ function renderPreview() {
         <input type='number' data-key='width' data-idx='${idx}' value='${settings.width}' placeholder='너비'>
         <input type='number' data-key='height' data-idx='${idx}' value='${settings.height}' placeholder='높이'>
         <input type='number' data-key='quality' data-idx='${idx}' value='${settings.quality}' min='1' max='100' placeholder='퀄리티'>
-        <label><input type='checkbox' data-key='remove_metadata' data-idx='${idx}' ${settings.remove_metadata ? 'checked' : ''}> 메타데이터 삭제</label>
+        <label class='meta-checkbox'><input type='checkbox' data-key='remove_metadata' data-idx='${idx}' ${settings.remove_metadata ? 'checked' : ''}> <span>메타데이터 삭제</span></label>
       </div>`;
     previewList.appendChild(wrap);
   });
@@ -74,60 +74,80 @@ function renderPreview() {
   });
 }
 
-document.getElementById('applyGlobalBtn').addEventListener('click', () => {
+function applyGlobalSettings() {
   const width = document.getElementById('globalWidth').value;
   const height = document.getElementById('globalHeight').value;
-  const quality = document.getElementById('globalQuality').value || 70;
+  const quality = document.getElementById('globalQuality').value || 80;
   const remove = document.getElementById('globalRemoveMetadata').checked;
   Object.keys(state.settings).forEach((k) => {
     state.settings[k] = { width, height, quality, remove_metadata: remove };
   });
   renderPreview();
+}
+
+document.getElementById('applyGlobalBtn').addEventListener('click', applyGlobalSettings);
+
+['globalWidth', 'globalHeight', 'globalQuality'].forEach((id) => {
+  document.getElementById(id).addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      applyGlobalSettings();
+    }
+  });
 });
+
+function setProgress(upload, convert, download) {
+  uploadProgress.value = upload;
+  convertProgress.value = convert;
+  downloadProgress.value = download;
+}
 
 convertBtn.addEventListener('click', async () => {
   if (!state.turnstileToken) return alert('캡챠 인증 후 변환을 시작해주세요.');
   if (state.files.length === 0) return alert('업로드된 파일이 없습니다.');
 
-  uploadProgress.value = 25;
+  setProgress(10, 0, 0);
   const formData = new FormData();
   state.files.forEach((f) => formData.append('files', f));
   formData.append('settings_json', JSON.stringify(state.settings));
   formData.append('remove_metadata_all', document.getElementById('globalRemoveMetadata').checked ? 'true' : 'false');
   formData.append('turnstile_token', state.turnstileToken);
 
-  uploadProgress.value = 60;
-  convertProgress.value = 20;
-  const resp = await fetch('/api/convert', { method: 'POST', body: formData });
-  uploadProgress.value = 100;
+  try {
+    setProgress(35, 5, 0);
+    const resp = await fetch('/api/convert', { method: 'POST', body: formData });
+    setProgress(100, 45, 10);
 
-  if (!resp.ok) {
-    const errorData = await resp.json();
-    alert(errorData.detail || '변환 중 오류가 발생했습니다.');
-    return;
+    if (!resp.ok) {
+      const errorData = await resp.json();
+      throw new Error(errorData.detail || '변환 중 오류가 발생했습니다.');
+    }
+
+    const data = await resp.json();
+    setProgress(100, 100, 55);
+    state.conversionId = data.conversion_id;
+    resultList.innerHTML = '';
+    data.converted.forEach((item) => {
+      const div = document.createElement('div');
+      div.className = 'result-item';
+      div.innerHTML = `<span>${item.converted_name}</span> <a class='btn' href='${item.download_url}'>개별 다운로드</a>`;
+      resultList.appendChild(div);
+    });
+
+    if (data.zip_url) {
+      zipDownloadBtn.classList.remove('hidden');
+      zipDownloadBtn.href = data.zip_url;
+    } else {
+      zipDownloadBtn.classList.add('hidden');
+    }
+
+    setProgress(100, 100, 100);
+    resultSection.classList.remove('hidden');
+  } catch (error) {
+    console.error(error);
+    alert(error.message || '변환 중 오류가 발생했습니다.');
+    setProgress(0, 0, 0);
   }
-
-  convertProgress.value = 100;
-  downloadProgress.value = 35;
-  const data = await resp.json();
-  state.conversionId = data.conversion_id;
-  resultList.innerHTML = '';
-  data.converted.forEach((item) => {
-    const div = document.createElement('div');
-    div.className = 'result-item';
-    div.innerHTML = `<span>${item.converted_name}</span> <a class='btn' href='${item.download_url}'>개별 다운로드</a>`;
-    resultList.appendChild(div);
-  });
-
-  if (data.zip_url) {
-    zipDownloadBtn.classList.remove('hidden');
-    zipDownloadBtn.href = data.zip_url;
-  } else {
-    zipDownloadBtn.classList.add('hidden');
-  }
-
-  downloadProgress.value = 100;
-  resultSection.classList.remove('hidden');
 });
 
 resetBtn.addEventListener('click', async () => {

@@ -68,6 +68,25 @@ h1 {
   gap: 6px;
 }
 
+.meta-checkbox {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px !important;
+  min-height: 40px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background: #171717;
+  color: #dcdcdc !important;
+  padding: 8px 10px;
+  font-size: 14px !important;
+}
+
+.meta-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #7aa2ff;
+}
+
 .global-settings input {
   background: #111;
   border: 1px solid #333;
@@ -103,6 +122,9 @@ h1 {
   margin-top: 14px;
   display: flex;
   gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .progress-wrap {
@@ -119,7 +141,10 @@ progress {
 }
 
 .turnstile-wrapper {
-  margin-bottom: 12px;
+  min-height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .mouse-glow {
