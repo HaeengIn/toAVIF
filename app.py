@@ -12,7 +12,8 @@ import uuid
 import zipfile
 from pathlib import Path
 
-import pillow_avif
+from pillow_heif import register_heif_opener
+register_heif_opener()
 import requests
 from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.responses import FileResponse, JSONResponse
